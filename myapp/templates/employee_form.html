@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+{% block title %}Create New Employee{% endblock %}
+
+{% block head %}
+	<style>
+		.fieldWrapper{
+		width: 200px;
+		}	
+	</style>
+	<script type="text/javascript">
+	function create_emp(){
+		var form = $('#employee_form');
+		$.ajax({
+			type: "POST",
+			url: "/create_employee/",
+			data: {'form_data': form.serialize(), csrfmiddlewaretoken: '{{ csrf_token }}',},
+			success: function(data){
+					if(data.status == 'success'){
+						window.location.href = "/employee_list/"
+						console.log('Employee Updated successfully');
+					}else{
+						$('#error').text(data.err_message);
+						if(data.err_dict.hasOwnProperty('name')){
+							$('#name_err').text(data.err_dict.name[0]);
+						}	
+						if(data.err_dict.hasOwnProperty('email')){
+							$('#email_err').text(data.err_dict.email[0]);	
+						}
+						if(data.err_dict.hasOwnProperty('phone')){
+							$('#phone_err').text(data.err_dict.phone[0]);	
+						}
+						if(data.err_dict.hasOwnProperty('dob')){
+							$('#dob_err').text(data.err_dict.dob[0]);
+						}	
+						if(data.err_dict.hasOwnProperty('designation')){
+							$('#designation_err').text(data.err_dict.designation[0]);	
+						}
+					}
+					},
+			error: function(err){
+					console.log(err);
+			}
+		});
+	}
+	</script>
+{% endblock %}
+
+
+{% block container %}
+	{% if err_message %}
+		<span id="error">
+		{{ err_message }}
+		</span>
+	{% endif %}
+		<div class="row">
+			<div class="col-md-8 col-md-offset-4 col-xs-12">
+				<h2>
+					Create New Employee
+				</h2>
+			</div>
+			<form action="" method="POST" id="employee_form" class="form-horizontal">{% csrf_token %}
+			{{ form.non_field_errors }}
+				<div class="form-group">
+					{{ err_dict.name }}
+					<label for="{{ form.name.id_for_label }}" class="col-md-1 col-md-offset-4 col-xs-3">Name:</label>
+					<div class="col-md-5 col-xs-9">
+						{{ form.name }}
+					<span id="name_err" class="text-danger"></span>
+					</div>
+				</div>
+				<div class="form-group">
+					{{ err_dict.email }}
+					<label for="{{ form.email.id_for_label }}" class="col-md-1 col-md-offset-4 col-xs-3">Email:</label>
+					<div class="col-md-5 col-xs-9">
+						{{ form.email }}
+					<span id="email_err" class="text-danger"></span>
+					</div>
+				</div>
+				<div class="form-group">
+					{{ err_dict.phone }}
+					<label for="{{ form.phone.id_for_label }}" class="col-md-1 col-md-offset-4 col-xs-3">Phone Number:</label>
+					<div class="col-md-5 col-xs-9">
+						{{ form.phone }}
+					<span id="phone_err" class="text-danger"></span>
+					</div>
+				</div>
+				<div class="form-group">
+					{{ err_dict.dob }}
+					<label for="{{ form.dob.id_for_label }}" class="col-md-1 col-md-offset-4 col-xs-3">Date of Birth:</label>
+					<div class="col-md-5 col-xs-9">
+						{{ form.dob }}
+					<span id="dob_err" class="text-danger"></span>
+					</div>
+				</div>	
+				<div class="form-group">
+					{{ err_dict.designation }}
+					<label for="{{ form.designation.id_for_label }}" class="col-md-1 col-md-offset-4 col-xs-3">Designation:</label>
+					<div class="col-md-5 col-xs-9">
+						{{ form.designation }}
+					<span id="designation_err" class="text-danger"></span>
+					</div>
+				</div>	
+				<div class="form-group">
+					<div class="col-md-7 col-md-offset-5 col-xs-7 col-xs-offset-5">
+						<input type="button" value="SUBMIT" class="btn btn-primary btn-sm" onclick="create_emp();">
+					</div> 
+				</div>
+			</form>
+		</div>
+{% endblock %}

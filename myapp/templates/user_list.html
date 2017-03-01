@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block title %}Employee List{% endblock %}
+{% load staticfiles %}
+
+{% block head %}
+	<script type="text/javascript">
+		function editEmployee(event, id){
+			event.preventDefault();
+			$.ajax({
+				type: "POST",
+				url: '/edit/'+id,
+				data: {'csrfmiddlewaretoken': '{{ csrf_token }}',},
+				success: function(data){
+					alert(data);
+					console.log(data);
+				},
+				error: function(err){
+					console.log(err);
+				}
+			});
+		}		
+	</script>
+{% endblock %}
+
+
+{% block container %}
+	<div id='row'>
+		<div col-md-12>
+			<h2>Employee List</h2>
+		</div>
+		<div col-md-12>
+			<a href="{% url 'employee:create_employee' %}" class="pull-right">
+				<span class="glyphicon glyphicon-plus" aria-hidden="true">Create Employee</span>
+			</a>
+		</div>
+		<div class="clearfix"></div>
+		<div class="table-responsive">
+			<table id="employee_lst" class="table table-striped table-bordered table-hover">
+				<thead>
+					<tr>
+						<th>Name</th>
+						<th>Email</th>
+						<th>Phone</th>
+						<th>Designation</th>
+						<th>DOB</th>
+						<th>Update Link</th>
+						<!--<th>Employee ID Link</th>-->
+					</tr>
+				</thead>
+				<tbody>
+					{% for emp in employee_list %}
+						<tr>
+							<td>{{ emp.name }}</td>
+							<td>{{ emp.email }}</td>
+							<td>{{ emp.phone }}</td>
+							<td>{{ emp.designation }}</td>
+							<td>{{ emp.dob }}</td>
+							<td><a href="{% url 'employee:edit_employee_details' id=emp.id %}">Update</a></td> 
+							<!--<td><a href="#" onclick="editEmployee(event, {{emp.id}})">Update</a></td> -->
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+{% endblock %}

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html lang="en">
+    <head>
+    	<meta charset="UTF-8">
+    	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    	<meta name="viewport" content="width=device-width, initial-scale=1">	
+    	<title>
+	    	{% block title %}
+	        {% endblock %}
+        </title>	
+		<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+		<link rel="stylesheet" href="{% static 'css/animate.css' %}">
+		<link rel="stylesheet" href="{% static 'css/icomoon.css' %}">
+		<link rel="stylesheet" href="{% static 'css/magnific-popup.css' %}">
+		<link rel="stylesheet" href="{% static 'css/style.css' %}">
+<!--		<link rel="stylesheet" href="{% static 'css/base.css' %}"> -->
+		<script src="{% static 'js/modernizr-2.6.2.min.js' %}"></script>
+        {% block head %}
+        {% endblock %}
+    </head>
+    <body>
+		<div id="page">       
+			<nav class="fh5co-nav" role="navigation">
+				{% include "home/menu.html" %}
+			</nav>
+			<header id="fh5co-header" class="fh5co-cover" role="banner" style="background-image:url(images/img_bg_1.jpg);">
+				{% include "home/header.html" %}
+			</header>
+			<div class="container" id="fh5co-testimonial">
+				{% include "home/experience.html" %}
+			</div>
+			<div class="fh5co-bg-section" id="skills">
+				{% include "home/skills.html" %}
+			</div>			
+		</div>
+
+		<!--Including different scripts used in the page. --> 
+		<script src="{% static 'js/jquery-1.12.4.min.js' %}"></script>
+		<script src="{% static 'js/jquery.easing.1.3.js' %}"></script>
+		<script src="{% static 'js/jquery.waypoints.min.js' %}"></script>
+		<script src="{% static 'js/jquery.countTo.js' %}"></script>
+		<script src="{% static 'js/jquery.magnific-popup.min.js' %}"></script>
+		<script src="{% static 'js/magnific-popup-options.js' %}"></script>
+		<script src="{% static 'js/main.js' %}"></script>
+    </body>
+</html>

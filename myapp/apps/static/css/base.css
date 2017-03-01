@@ -1,0 +1,30 @@
+body{
+	font: 12px;	
+	font-family: Arial;
+}
+
+
+div{
+	margin: 30px 30px;
+}
+
+table#employee_lst{
+	border: 2px solid #333;
+}
+
+table#employee_lst tr th{
+	font: 14px;
+	color: #eee;
+	text-align: center;
+	padding: 10px;
+	width: 20%;
+}
+
+
+table#employee_lst tr td{
+	font: 12px;
+	color: #eee;
+	text-align: left;
+	padding: 10px;
+	width: 20%;
+}
