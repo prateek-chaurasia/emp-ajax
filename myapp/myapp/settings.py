@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+	'django_extensions',
 	'apps'
 ]
 
@@ -138,3 +139,8 @@ STATICFILES_FINDERS = (
 
 USE_L10N = True
 DATE_INPUT_FORMATS = ['%d-%m-%Y','%Y-%m-%d']
+
+GRAPH_MODELS = {
+  'all_applications': True,
+  'group_models': True,
+}
