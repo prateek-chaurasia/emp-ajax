@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 	'django_extensions',
-	'apps'
+	'apps',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -86,7 +86,7 @@ DATABASES = {
         'PORT': '3306',
     }
 }
-
+AUTH_USER_PROFILE = 'apps.cricket.UserProfile'
 
 # Password validation
 # https://docs.djangoproject.com/en/1.9/ref/settings/#auth-password-validators

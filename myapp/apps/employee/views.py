@@ -7,6 +7,7 @@ from django.core.urlresolvers import reverse
 from django.shortcuts import render
 from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from models import Employee
+from rest_data import retail_data
 from forms import EmployeeForm
 from django.views import generic
 from django.shortcuts import get_object_or_404
@@ -14,6 +15,14 @@ from django.utils.encoding import smart_str
 
 PROJECT_PATH = os.path.realpath(os.path.dirname(__file__))
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+
+
+def ajax_test(request):
+#	import ipdb;ipdb.set_trace()
+	if request.method == 'GET':
+		retail_list = retail_data
+		return JsonResponse(retail_data)
 
 def detail(request, employee_id):
 	movie = get_object_or_404(Employee, pk=employee_id)
@@ -49,7 +58,6 @@ def create_employee(request):
 							'err_message': message})
 	else:
 		form = EmployeeForm()
-		import ipdb;ipdb.set_trace()
 		context['form'] = form
 		context['err_dict'] = {}
 	return render(request, 'employee_form.html',context)
