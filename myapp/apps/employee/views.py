@@ -4,7 +4,7 @@ import urllib2, urllib
 from django.shortcuts import render, render_to_response
 from django.template import RequestContext
 from django.core.urlresolvers import reverse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from models import Employee
 from rest_data import retail_data
@@ -22,12 +22,47 @@ def ajax_test(request):
 #	import ipdb;ipdb.set_trace()
 	if request.method == 'GET':
 		retail_list = retail_data
+		print request.session.get('match_one', "Not Exists")
+		print request.session.get('match_all', "Not Exists")
 		return JsonResponse(retail_data)
 
 def detail(request, employee_id):
 	movie = get_object_or_404(Employee, pk=employee_id)
 	return render(request, 'detail.html', {'movie': movie})
 
+
+def filter_records(request):
+	context = {}
+	if request.method == 'POST':
+		match_query = request.POST.get('match_query')
+		context['match_query'] = match_query
+	return render(request, 'filter_form.html',context)
+		
+
+def search_records(request):
+	context = {}
+	if request.method == 'POST':
+		match_query_one = request.POST.get('check_one', "")
+		match_query_all = request.POST.get('check_all', "")
+		if match_query_one:
+			val1 = request.POST.get('test1', "")
+			val2 = request.POST.get('test2', "")
+			val3 = request.POST.get('test3', "")
+			val4 = request.POST.get('test4', "")
+			request.session['match_one'] = {"values": [
+				val1, val2, val3, val4
+			]}
+			return redirect('employee:ajax_test')
+		else:
+			val1 = request.POST.get('check1', "")
+			val2 = request.POST.get('check2', "")
+			val3 = request.POST.get('check3', "")
+			val4 = request.POST.get('check4', "")
+			request.session['match_all'] = {"values": [
+				val1, val2, val3, val4
+			]}
+			return redirect('employee:ajax_test')
+		
 
 class IndexView(generic.ListView):
 	template_name = 'user_list.html'

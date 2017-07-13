@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}Filter Records Form{% endblock %}
+
+{% block head %}
+	<style>
+		.fieldWrapper{
+		width: 200px;
+		}	
+	</style>
+{% endblock %}
+
+
+{% block container %}
+	<div class="row">
+		<div class="col-md-6 col-md-offset-4">
+		{% if match_query == 'match_one' %}
+			<form action={% url 'employee:search_records' %} method="POST">{% csrf_token %}
+				<input type="hidden" name="test1" value="1"/>
+				<input type="hidden" name="test2" value="2"/>
+				<input type="hidden" name="test3" value="3"/>
+				<input type="hidden" name="test4" value="4"/>
+				<input type="radio" name="check_one" value="Yes"/>Yes</br>
+				<input type="radio" name="check_one" value="No"/>No
+				<input type="submit" value="Filter">
+			</form>
+		{% else %}
+			<form action={% url 'employee:search_records' %} method="POST">{% csrf_token %}
+				<input type="hidden" name="check1" value="A"/>
+				<input type="hidden" name="check2" value="B"/>
+				<input type="hidden" name="check3" value="C"/>
+				<input type="hidden" name="check4" value="D"/>
+				<input type="radio" name="check_all" value="Yes"/>Yes</br>
+				<input type="radio" name="check_all" value="No"/>No
+				<input type="submit" value="Filter">
+			</form>
+		{% endif %}
+		</div>
+	</div>
+{% endblock %}

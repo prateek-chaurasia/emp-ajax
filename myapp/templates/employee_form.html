@@ -107,7 +107,20 @@
 				</div>
 			</form>
 		</div>
-
+		<div class="row">	
+			<div class="col-md-6">
+				<form method="POST" action="{% url 'employee:filter_records' %}">{% csrf_token %}
+					<input type="hidden" name="match_query" value="match_one"/>
+					<input type="submit" value="Filter 1"/>
+				</form>
+			</div>
+			<div class="col-md-6">
+				<form method="POST" action="{% url 'employee:filter_records' %}">{% csrf_token %}
+					<input type="hidden" name="match_query" value="match_all"/>
+					<input type="submit" value="Filter All"/>
+				</form>
+			</div>
+		</div>
 		<div class="row">
 			<div class="col-md-12">
 				<table id="example" class="display" width="100%" cellspacing="0">
